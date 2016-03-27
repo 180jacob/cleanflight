@@ -49,6 +49,7 @@
 #include "rx/msp.h"
 #include "rx/xbus.h"
 #include "rx/ibus.h"
+#include "rx/nRF24L01.h"
 
 #include "rx/rx.h"
 
@@ -180,6 +181,11 @@ void rxInit(rxConfig_t *rxConfig, modeActivationCondition_t *modeActivationCondi
     if (feature(FEATURE_RX_MSP)) {
         rxMspInit(rxConfig, &rxRuntimeConfig, &rcReadRawFunc);
     }
+#ifdef NRF24
+     if (feature(FEATURE_RX_NRF24)) {
+         rxNRF24Init(rxConfig, &rxRuntimeConfig, &rcReadRawFunc);
+     }
+#endif
 
     if (feature(FEATURE_RX_PPM) || feature(FEATURE_RX_PARALLEL_PWM)) {
         rxRefreshRate = 20000;
@@ -337,7 +343,18 @@ void updateRx(uint32_t currentTime)
             needRxSignalBefore = currentTime + DELAY_5_HZ;
         }
     }
-
+	
+#ifdef NRF24
+     if (feature(FEATURE_RX_NRF24)) {
+         rxDataReceived = rxNRF24ReceivePacket();
+		 if (rxDataReceived) {
+            rxSignalReceived = true;
+            rxIsInFailsafeMode = false;
+            needRxSignalBefore = currentTime + DELAY_5_HZ;
+         }
+     }
+ #endif
+ 
     if (feature(FEATURE_RX_PPM)) {
         if (isPPMDataBeingReceived()) {
             rxSignalReceivedNotDataDriven = true;
@@ -440,7 +457,10 @@ STATIC_UNIT_TESTED uint16_t applyRxChannelRangeConfiguraton(int sample, rxChanne
 static void readRxChannelsApplyRanges(void)
 {
     uint8_t channel;
-
+	if (feature(FEATURE_RX_NRF24)) {
+		return;
+	}
+	
     for (channel = 0; channel < rxRuntimeConfig.channelCount; channel++) {
 
         uint8_t rawChannel = calculateChannelRemapping(rxConfig->rcmap, REMAPPABLE_CHANNEL_COUNT, channel);
