@@ -262,7 +262,7 @@ void annexCode(void)
             DISABLE_ARMING_FLAG(OK_TO_ARM);
         }
 
-        if (isCalibrating() || isSystemOverloaded()) {
+        if (isCalibrating()|| isSystemOverloaded() ) {
             warningLedFlash();
             DISABLE_ARMING_FLAG(OK_TO_ARM);
         } else {
@@ -308,14 +308,18 @@ void releaseSharedTelemetryPorts(void) {
 
 void mwArm(void)
 {
+	
     if (ARMING_FLAG(OK_TO_ARM)) {
         if (ARMING_FLAG(ARMED)) {
             return;
         }
+		
         if (rcModeIsActive(BOXFAILSAFE)) {
-            return;
+           // return;
+
         }
-        if (!ARMING_FLAG(PREVENT_ARMING)) {
+		
+        if (!ARMING_FLAG(PREVENT_ARMING)) { 
             ENABLE_ARMING_FLAG(ARMED);
             headFreeModeHold = DECIDEGREES_TO_DEGREES(attitude.values.yaw);
 
