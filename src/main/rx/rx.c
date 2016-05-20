@@ -504,7 +504,7 @@ static void detectAndApplySignalLossBehaviour(void)
 
     for (channel = 0; channel < rxRuntimeConfig.channelCount; channel++) {
 
-        sample = (useValueFromRx) ? rcRaw[channel] : PPM_RCVR_TIMEOUT;
+        sample = (useValueFromRx) ? rcData[channel] : 700;//PPM_RCVR_TIMEOUT;
 
         bool validPulse = isPulseValid(sample);
 
@@ -520,7 +520,7 @@ static void detectAndApplySignalLossBehaviour(void)
         }
 
         if (rxIsDataDriven) {
-            rcData[channel] = sample;
+        //   rcData[channel] = sample;
         } else {
             rcData[channel] = calculateNonDataDrivenChannel(channel, sample);
         }

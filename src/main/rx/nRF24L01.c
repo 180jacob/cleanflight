@@ -525,13 +525,15 @@ bool rxNRF24ReceivePacket()
 
     if ( receivedPacket ) {
         lastRecvTime = now;
+		setRcDataFromPayload();
     }
-    else if ( now - lastRecvTime > NRF24_FAILSAFE_TIME_MS ) {
+    else {//if ( now - lastRecvTime > NRF24_FAILSAFE_TIME_MS ) {
         // signal lost?
-        resetPayload();
+     //   resetPayload();
+		receivedPacket = false;
     }
-
-    setRcDataFromPayload();
+	//receivedPacket = true;// disables in built failsafe
+    
 
     return receivedPacket;
 }

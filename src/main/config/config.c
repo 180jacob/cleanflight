@@ -750,7 +750,7 @@ void validateAndFixConfig(void)
         featureClear(FEATURE_RX_SERIAL | FEATURE_RX_PARALLEL_PWM | FEATURE_RX_PPM);
     }
 
-    if (featureConfigured(FEATURE_RX_SERIAL) || featureConfigured(FEATURE_RX_NRF24))) {
+    if (featureConfigured(FEATURE_RX_SERIAL) || featureConfigured(FEATURE_RX_NRF24)) {
         featureClear(FEATURE_RX_PARALLEL_PWM | FEATURE_RX_MSP | FEATURE_RX_PPM);
     }
 

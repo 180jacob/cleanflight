@@ -137,7 +137,6 @@ void processRcStickPositions(rxConfig_t *rxConfig, throttleStatus_e throttleStat
     static uint8_t rcSticks;            // this hold sticks position for command combos
     uint8_t stTmp = 0;
     int i;
-
     // ------------------ STICKS COMMAND HANDLER --------------------
     // checking sticks positions
     for (i = 0; i < 4; i++) {
@@ -252,7 +251,7 @@ void processRcStickPositions(rxConfig_t *rxConfig, throttleStatus_e throttleStat
 
     if (isUsingSticksToArm) {
 
-        if (rcSticks == THR_LO + YAW_HI + PIT_CE + ROL_CE) {
+       if (rcSticks == THR_LO + YAW_HI + PIT_CE + ROL_CE) {
             // Arm via YAW
             mwArm();
             return;
