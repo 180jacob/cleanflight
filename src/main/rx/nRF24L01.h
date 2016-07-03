@@ -1,7 +1,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-
+#include "config/parameter_group.h"
 #include "rx/rx.h"
 
 /*****************************************************************************/

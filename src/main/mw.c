@@ -262,7 +262,7 @@ void annexCode(void)
             DISABLE_ARMING_FLAG(OK_TO_ARM);
         }
 
-        if (isCalibrating()|| isSystemOverloaded() ) {
+        if (isCalibrating() ) {//|| isSystemOverloaded()
             warningLedFlash();
             DISABLE_ARMING_FLAG(OK_TO_ARM);
         } else {
