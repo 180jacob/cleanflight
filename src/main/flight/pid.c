@@ -22,7 +22,7 @@
 
 #include <platform.h>
 
-#include "build_config.h"
+#include "build/build_config.h"
 
 #include "common/axis.h"
 #include "common/maths.h"
@@ -30,9 +30,8 @@
 
 #include "config/parameter_group.h"
 #include "config/parameter_group_ids.h"
-#include "config/runtime_config.h"
-#include "config/config.h"
 #include "config/config_reset.h"
+#include "config/profile.h"
 
 #include "drivers/sensor.h"
 #include "drivers/accgyro.h"
@@ -43,8 +42,8 @@
 
 #include "rx/rx.h"
 
-#include "io/rc_controls.h"
-#include "io/rate_profile.h"
+#include "fc/rc_controls.h"
+#include "fc/rate_profile.h"
 
 #include "flight/pid.h"
 
@@ -66,9 +65,6 @@ void pidMultiWiiRewrite(const pidProfile_t *pidProfile, const controlRateConfig_
         uint16_t max_angle_inclination, const rollAndPitchTrims_t *angleTrim, const rxConfig_t *rxConfig);
 void pidMultiWii23(const pidProfile_t *pidProfile, const controlRateConfig_t *controlRateConfig,
         uint16_t max_angle_inclination, const rollAndPitchTrims_t *angleTrim, const rxConfig_t *rxConfig);
-
-typedef void (*pidControllerFuncPtr)(const pidProfile_t *pidProfile, const controlRateConfig_t *controlRateConfig,
-        uint16_t max_angle_inclination, const rollAndPitchTrims_t *angleTrim, const rxConfig_t *rxConfig);            // pid controller function prototype
 
 pidControllerFuncPtr pid_controller = pidMultiWiiRewrite;
 
